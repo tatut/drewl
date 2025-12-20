@@ -137,7 +137,6 @@ void help(str args) {
   bool first = true;
   DO_COMMANDS(HELP);
 #undef HELP
-  printf("HELP SIZE: %d\n", HELP_SIZE-left);
   left -= snprintf(&help[HELP_SIZE-left], left, "\n]}");
   print_response(true, (str){.data=help, .len=HELP_SIZE-left});
 }
