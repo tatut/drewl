@@ -14,6 +14,7 @@
 // global state
 webview_t window;
 str url = {0};
+bool webview_ready = false;
 
 // respond to eval
 void print_response(bool success, str res) {
@@ -155,11 +156,18 @@ void quit(webview_t w, void *_arg) {
   webview_destroy(w);
 }
 
+void ready(webview_t w, void *_data) {
+  webview_ready = true;
+}
+
 #define BUF_SIZE 4096
 char in_buf[BUF_SIZE]; // max command that can be read
 void *drewl(void *input) {
   FILE *in = (FILE*)input;
   char *ln;
+  while(!window) usleep(1000);
+  usleep(500000); // PENDING: crashes if dispatching too quickly here
+  webview_dispatch(window, ready, NULL);
   while((ln = fgets(in_buf, BUF_SIZE, in))) {
     str line = (str){.len=strlen(ln),.data=ln};
     line = str_trim(line);
@@ -187,12 +195,13 @@ void *drewl(void *input) {
 int main(void) {
   pthread_t cli;
   pthread_create(&cli, NULL, drewl, stdin);
-  window = webview_create(0, NULL);
-  webview_set_title(window, "drewl");
-  webview_set_size(window, 480, 320, WEBVIEW_HINT_NONE);
-  webview_set_html(window, "No URL set, use \"go\" command to navigate.");
-  webview_bind(window, "_drewl_respond", respond, NULL);
-  webview_bind(window, "_drewl_log", console_log, NULL);
+  webview_t w = webview_create(0, NULL);
+  webview_set_title(w, "drewl");
+  webview_set_size(w, 480, 320, WEBVIEW_HINT_NONE);
+  webview_set_html(w, "No URL set, use \"go\" command to navigate.");
+  webview_bind(w, "_drewl_respond", respond, NULL);
+  webview_bind(w, "_drewl_log", console_log, NULL);
+  window = w;
   webview_run(window);
   return 0;
 }
