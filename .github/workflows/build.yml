@@ -1,6 +1,4 @@
-# This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
-# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: CMake on multiple platforms
+name: Build
 
 on:
   push:
@@ -12,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: install libwebkit2gtk
-      run: sudo apt-get install -f libwebkit2gtk-4.0
+    - run: sudo apt-get update
+    - run: sudo apt-get install -f libwebkit2gtk-4.0
 
     - uses: actions/checkout@v4
 
