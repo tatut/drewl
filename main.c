@@ -78,7 +78,6 @@ void wsize(str args) {
   if(str_splitat(args, " ", &w, &h)) {
     struct sz s = (struct sz){.w = str_to_long(w), .h = str_to_long(h)};
     if(!s.w || !s.h) goto fail;
-    printf("w: %d, h: %d\n", s.w, s.h);
     webview_dispatch(window, wsize_set, &s);
     print_response(true, (str){0});
     return;
