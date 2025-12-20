@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: install libwebkit2gtk
-      run: apt-get install -f libwebkit2gtk-4.0
+      run: sudo apt-get install -f libwebkit2gtk-4.0
 
     - uses: actions/checkout@v4
 
