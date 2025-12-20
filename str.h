@@ -109,7 +109,7 @@ str str_trim(str in) {
 
 long str_to_long(str s) {
   long l=0;
-  for(size_t i=0;i<s.len;i++) {
+  for(size_t i=0; i < s.len && s.data[i] >= '0' && s.data[i] <= '9'; i++) {
     l = (l*10) + (s.data[i]-48);
   }
   return l;
