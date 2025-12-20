@@ -8,11 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
-    - run: sudo apt-get update
-    - run: sudo apt-get install -f libwebkit2gtk-4.0
-
     - uses: actions/checkout@v4
 
     - name: Configure CMake
