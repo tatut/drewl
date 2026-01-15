@@ -10,7 +10,7 @@
   (interactive)
   (if (process-live-p -drewl-process)
       (progn
-        (process-send-string -drewl-process "quit")
+        (process-send-string -drewl-process "quit\n")
         (kill-process -drewl-process)
         (setq -drewl-process nil))))
 
