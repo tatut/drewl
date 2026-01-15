@@ -24,6 +24,17 @@
              :connection-type 'pipe))
     -drewl-process))
 
-(defun drewl-go (url)
-  (interactive "sURL: ")
+(defun -drewl-go (url)
   (process-send-string (-drewl-ensure) (format "go %s\n" url)))
+
+(defun drewl-go ()
+  (interactive)
+  (let ((url (thing-at-point 'url)))
+    (let ((url (if (eq 'nil url)
+                   (read-from-minibuffer "URL: ")
+                 url)))
+      (unless (eq 'nil url)
+        (-drewl-go url)))))
+
+(defun browse-url-drewl (url)
+  (-drewl-go url))
