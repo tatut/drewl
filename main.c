@@ -60,6 +60,8 @@ void console_log(const char *id, const char *result, void *user) {
   X(console, "console",                                                        \
     "instrument console log, must be redone after navigation")                 \
   X(wsize, "wsize <width> <height>", "set browser window size")                \
+  X(back, "back", "go back in history")                                        \
+  X(forward, "forward", "go forward in history")                               \
   X(help, "help", "get some help")
 
 
@@ -95,7 +97,7 @@ void console(str args) {
                "console.warn = (function() { _drewl_log('warn',arguments) });");
 }
 
-    
+
 void go(str args) {
   str_free(&url);
   url = str_dup(args);
@@ -103,6 +105,10 @@ void go(str args) {
   snprintf(_url, 2048, STR_FMT, STR_ARG(args));
   webview_navigate(window, _url);
 }
+
+void back(str args) { webview_eval(window, "history.back()"); }
+void forward(str args) { webview_eval(window, "history.forward()"); }
+
 
 void reload(str _args) { webview_eval(window, "window.location.reload()"); }
 
