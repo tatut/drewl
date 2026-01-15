@@ -36,6 +36,8 @@ Drewl supports the following commands:
 
 * `go <url>` navigates to the given URL
 * `reload` reload current URL
+* `back` go back in history
+* `forward` go forward in history
 * `click <selector>` queries the given selector and clicks it
 * `eval <code>` evaluate given JS code
 * `html <selector>` returns the HTML of the given selector
